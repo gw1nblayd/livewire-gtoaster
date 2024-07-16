@@ -1,19 +1,19 @@
 <?php
 
-namespace Gw1nblayd\LivewireGToaster\Providers;
+namespace Gw1nblayd\GToaster\Providers;
 
-use Gw1nblayd\LivewireGToaster\Console\Commands\LivewireGToasterInstall;
+use Gw1nblayd\GToaster\Console\Commands\GToasterInstall;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
-class LivewireGToasterProvider extends EventServiceProvider
+class GToasterProvider extends EventServiceProvider
 {
     public function register(): void
     {
         parent::register();
 
         $this->commands([
-            LivewireGToasterInstall::class,
+            GToasterInstall::class,
         ]);
     }
 

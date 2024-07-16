@@ -1,11 +1,11 @@
 <?php
 
-namespace Gw1nblayd\LivewireGToaster\Console\Commands;
+namespace Gw1nblayd\GToaster\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
-class LivewireGToasterInstall extends Command
+class GToasterInstall extends Command
 {
     protected $signature = 'gtoaster:install';
 

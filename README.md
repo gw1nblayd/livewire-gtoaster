@@ -83,7 +83,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use Gw1nblayd\LivewireGToaster\Livewire\Traits\GToaster;
+use Gw1nblayd\GToaster\Livewire\Traits\GToaster;
 use Illuminate\View\View;
 use Livewire\Component;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gw1nblayd\LivewireGToaster\Livewire\Traits;
+namespace Gw1nblayd\GToaster\Livewire\Traits;
 
 trait GToaster
 {

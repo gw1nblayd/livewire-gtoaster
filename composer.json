@@ -44,7 +44,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Gw1nblayd\\GToaster\\Providers\\LivewireGToasterProvider"
+        "Gw1nblayd\\GToaster\\Providers\\GToasterProvider"
       ]
     }
   }
