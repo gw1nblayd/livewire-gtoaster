@@ -1,4 +1,7 @@
 class GToaster {
+  #style = 'flat'; // flat, blank
+  #theme = 'dark';
+  #showIcons = true;
   #timer = 3000;
   #position = 'bottom-right';
 
@@ -30,6 +33,10 @@ class GToaster {
   setParams(params) {
     this.#timer = params?.timer || this.#timer;
     this.#position = params?.position || this.#position;
+
+    this.#showIcons = params?.showIcons ?? this.#showIcons;
+    this.#theme = params?.theme || this.#theme;
+    this.#style = params?.style || this.#style;
   }
 
   #setPosition() {
@@ -69,45 +76,60 @@ class GToaster {
     }
   }
 
-  #getToasterColor(type) {
-    return {
-      success: '#4CAF50',
-      warning: '#FFA500',
-      info: '#2196F3',
-      error: '#F44336',
-    }[type];
+  #getFlatColor(type) {
+    return (
+      this.#theme === 'dark' ? {
+        success: '#17a34a',
+        error: '#dc2625',
+        warning: '#ca8a03',
+        info: '#2463eb',
+      } : {
+        success: '#22c55d',
+        error: '#ef4444',
+        warning: '#ebb305',
+        info: '#3c82f6',
+      }
+    )[type];
+  }
+
+  #getBlankColor() {
+    return this.#theme === 'dark' ? '#1F2937' : '#F9FAFB';
   }
 
   #getToasterSvg(type) {
+    if (!this.#showIcons) {
+      return '';
+    }
+
     return {
       success: `
-      <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 rounded-lg dark:text-green-200">
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0">
+        <svg style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
         </svg>
         <span class="sr-only">Check icon</span>
       </div>
     `,
       warning: `
-      <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 rounded-lg dark:text-orange-200">
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"/>
+      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0">
+        <svg style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
         </svg>
         <span class="sr-only">Warning icon</span>
       </div>
     `,
       info: `
-      <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 rounded-lg dark:text-blue-200">
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"/>
+      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0">
+        <svg style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
         </svg>
         <span class="sr-only">Info icon</span>
       </div>
     `,
       error: `
-      <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 rounded-lg dark:text-red-200">
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0">
+        <svg style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
         </svg>
         <span class="sr-only">Error icon</span>
       </div>
@@ -119,8 +141,8 @@ class GToaster {
     return `
      <div 
       id="g-toaster-${key}" 
-      class="dark:text-gray-400 dark:bg-gray-800"
       style="
+        color: ${this.#style === 'flat' ? '#fff' : this.#getFlatColor(type)};
         cursor: pointer;
         margin: 5px;
         display: flex;
@@ -129,12 +151,21 @@ class GToaster {
         border-radius: 10px;
         min-width: 250px;
         box-shadow: rgb(17 24 39) 1px 1px 3px;
+        background-color: ${this.#style === 'flat' ? this.#getFlatColor(type) : this.#getBlankColor()};
       " 
       role="alert"
       onclick="document.getElementById('g-toaster-${key}').remove();"
       >
         ${this.#getToasterSvg(type)}
-        <div class="text-sm font-normal" class="g-toaster-text" style="width:100%; color: ${this.#getToasterColor(type)}; text-align: center;">${text}</div>
+        <div 
+          class="g-toaster-text" 
+          style="
+            width:100%; 
+            text-align: center;
+          "
+        >
+          ${text}
+        </div>
       </div>
     `;
   }

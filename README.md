@@ -9,7 +9,7 @@ Minimalistic toasters for your laravel livewire application
 
 | PHP           | Laravel    | Livewire      | G-Toaster |
 |---------------|:-----------|:--------------|:----------|
-| 8.1, 8.2, 8.3 | 10.x, 11.x | 3.0, dev-main | 0.0.1     |
+| 8.1, 8.2, 8.3 | 10.x, 11.x | 3.0, dev-main | 0.0.2     |
 
 ## Installation
 
@@ -37,7 +37,16 @@ GToaster.setParams({
   position: 'bottom-right',
 
   // Time in milliseconds
-  timer: 3000, 
+  timer: 3000,
+
+  // Can be 'flat', 'blank'
+  style: 'flat',
+
+  // Can be 'dark', 'light'
+  theme: 'dark',
+
+  // Show icons in toasts
+  showIcons: true,
 });
 ```
 
@@ -78,7 +87,7 @@ use Gw1nblayd\LivewireGToaster\Livewire\Traits\GToaster;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class Test extends Component
+class TestComponent extends Component
 {
     use GToaster;
 

@@ -27,12 +27,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Gw1nblayd\\LivewireGToaster\\": "src/app"
+      "Gw1nblayd\\GToaster\\": "src/app"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Gw1nblayd\\LivewireGToaster\\Tests\\": "./tests"
+      "Gw1nblayd\\GToaster\\Tests\\": "./tests"
     }
   },
   "minimum-stability": "dev",
@@ -44,7 +44,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Gw1nblayd\\LivewireGToaster\\Providers\\LivewireGToasterProvider"
+        "Gw1nblayd\\GToaster\\Providers\\LivewireGToasterProvider"
       ]
     }
   }
