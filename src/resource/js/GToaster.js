@@ -4,6 +4,7 @@ class GToaster {
   #showIcons = true;
   #timer = 3000;
   #position = 'bottom-right';
+  #animation = 'none';
 
   constructor() {
     document.addEventListener('gtoast', (event) => {
@@ -27,6 +28,8 @@ class GToaster {
 
     x.innerHTML += this.#getToasterContent(randomKey, message, type);
 
+    this.#animate(randomKey);
+
     setTimeout(() => document.getElementById(`g-toaster-${randomKey}`)?.remove(), this.#timer);
   }
 
@@ -37,6 +40,7 @@ class GToaster {
     this.#showIcons = params?.showIcons ?? this.#showIcons;
     this.#theme = params?.theme || this.#theme;
     this.#style = params?.style || this.#style;
+    this.#animation = params?.animation || this.#style;
   }
 
   #setPosition() {
@@ -103,7 +107,7 @@ class GToaster {
 
     return {
       success: `
-      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0">
+      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 3px">
         <svg style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
         </svg>
@@ -111,7 +115,7 @@ class GToaster {
       </div>
     `,
       warning: `
-      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0">
+      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 3px;">
         <svg style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
         </svg>
@@ -119,7 +123,7 @@ class GToaster {
       </div>
     `,
       info: `
-      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0">
+      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 3px;">
         <svg style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
         </svg>
@@ -127,7 +131,7 @@ class GToaster {
       </div>
     `,
       error: `
-      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0">
+      <div style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 3px;">
         <svg style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
         </svg>
@@ -145,29 +149,51 @@ class GToaster {
         color: ${this.#style === 'flat' ? '#fff' : this.#getFlatColor(type)};
         cursor: pointer;
         margin: 5px;
-        display: flex;
-        align-items: center;
         padding: 15px;
         border-radius: 10px;
         min-width: 250px;
         box-shadow: rgb(17 24 39) 1px 1px 3px;
         background-color: ${this.#style === 'flat' ? this.#getFlatColor(type) : this.#getBlankColor()};
+        transition: all 0.3s ease;
       " 
       role="alert"
       onclick="document.getElementById('g-toaster-${key}').remove();"
       >
-        ${this.#getToasterSvg(type)}
-        <div 
-          class="g-toaster-text" 
+        <div
           style="
-            width:100%; 
-            text-align: center;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
           "
         >
-          ${text}
+          ${this.#getToasterSvg(type)}
+          <div 
+            class="g-toaster-text" 
+            style="
+              width:100%; 
+              text-align: center;
+            "
+          >
+            ${text}
+          </div>
         </div>
       </div>
     `;
+  }
+
+  #animate(randomKey) {
+    switch (this.#animation) {
+      case 'fade':
+        document.getElementById(`g-toaster-${randomKey}`).style.opacity = '0';
+
+        setTimeout(
+          () => document.getElementById(`g-toaster-${randomKey}`).style.opacity = '1',
+          50
+        );
+        break;
+      default:
+        break;
+    }
   }
 }
 

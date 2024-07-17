@@ -12,9 +12,9 @@ class GToasterProvider extends EventServiceProvider
     {
         parent::register();
 
-        $this->commands([
-            GToasterInstall::class,
-        ]);
+        //$this->commands([
+        //    GToasterInstall::class,
+        //]);
     }
 
     public function boot(): void
@@ -31,8 +31,8 @@ class GToasterProvider extends EventServiceProvider
 
     protected function publish(): void
     {
-        $this->publishes([
-            __DIR__ . '/../../resource/' => resource_path('/'),
-        ], ['livewire-gtoaster', 'laravel-assets']);
+        //$this->publishes([
+        //    __DIR__ . '/../../resource/' => resource_path('/'),
+        //], ['livewire-gtoaster', 'laravel-assets']);
     }
 }
