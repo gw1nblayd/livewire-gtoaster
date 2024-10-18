@@ -22,7 +22,7 @@ class GToaster {
 
   toast(type, message) {
     this.#setPosition();
-    const randomKey = crypto.randomUUID();
+    const randomKey = strRandom(16);
 
     let x = document.getElementById('g-toaster');
 
@@ -194,6 +194,18 @@ class GToaster {
       default:
         break;
     }
+  }
+
+  #strRandom(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
   }
 }
 
