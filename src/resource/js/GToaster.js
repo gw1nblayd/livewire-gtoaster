@@ -22,7 +22,7 @@ class GToaster {
 
   toast(type, message) {
     this.#setPosition();
-    const randomKey = strRandom(16);
+    const randomKey = this.#strRandom(16);
 
     let x = document.getElementById('g-toaster');
 
